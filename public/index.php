@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="css/lib/bootstrap/bootstrap.min.css" rel="stylesheet">      
-        <link href="css/main.css" rel="stylesheet">       
-        <script src="js/lib/jquery/jquery.min.js"></script>
-        <script src="js/common.js"></script>       
-        <script src="js/lib/bootstrap/bootstrap.min.js"></script>       
-    </head>
-    <body>
-        <div>Comment</div>
-    </body>
-</html>
+<?php
+
+ini_set('display_errors',1);
+error_reporting(E_ALL);
+
+define('ROOT', dirname(__FILE__));
+require_once (ROOT . '/../app/config/conf.php');
+//require_once (ROOT . '/../app/components/Router.php');
+use App\components\Router;
+require ROOT . '/../vendor/autoload.php';
+
+$router = new Router();
+$router->run();
+

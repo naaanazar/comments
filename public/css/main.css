@@ -1,1 +1,8 @@
 
+.error_f{
+	display: block;
+	font-size: 11px;
+	/*margin: -7px 0 -4px;*/
+
+	color: red;
+}

@@ -34,6 +34,15 @@ class Router
         
         return $controllerObj;
     }
+    
+    private function ErrorPage404()
+	{
+        $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
+        header('HTTP/1.1 404 Not Found');
+		header("Status: 404 Not Found");
+		//header('Location:'.$host.'404');
+                echo 'Error 404 Not Found';
+    }
 
     public function run()
     {      
@@ -62,12 +71,17 @@ class Router
 
                     $controllerObj = $this->createObj($controllerName);
                     //$result = $controllerObj->$actionName();
+                    
+                    if(method_exists($controllerObj, $actionName))
+                    {
+			$result = call_user_func_array(array($controllerObj, $actionName), $parameters);
 
-                    $result = call_user_func_array(array($controllerObj, $actionName), $parameters);
-
-                    if ($result != null) {
-                        break;
-                    }
+                        if ($result != null) {
+                            break;
+                        }
+                    } else {
+                        $this->ErrorPage404(); 
+                    }  
                 } 
             }
         }        

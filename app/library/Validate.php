@@ -56,6 +56,13 @@ class Validate
         }
     }
     
+    public function login($field) 
+    {           
+        if (preg_match("/[^a-zA-Z0-9_-]/", $field)){
+                return "Username can contain a-zA-Z0-9_- ";
+        }
+    }
+    
     public function username($field) 
     {           
         if (preg_match("/[^a-zA-Z0-9_-]/", $field)){

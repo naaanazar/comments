@@ -22,7 +22,17 @@ class Users {
         $result = $query->queryToDB($sql); 
        
         return $result;
-   } 
+    }
+    
+    public static function singIn($registration)
+    {
+        $query = new QueryToDB();           
+        $registration['password'] = md5(trim($registration['password']));
+        $sql = "SELECT id, username FROM users WHERE username='" . $registration['username'] . "' and password ='" . $registration['password'] . "'";
+        $result = $query->queryToDB($sql);
+        
+        return $result;
+    }
        
 }
     

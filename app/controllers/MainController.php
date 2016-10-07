@@ -11,5 +11,13 @@ class MainController
         require_once ROOT. '/../app/views/tamplateView.php';    
                
         return true;
-    }    
+    }  
+    
+    public function actionLoginForm()
+    {
+        $contentView = 'loginView.php';      
+        require_once ROOT. '/../app/views/tamplateView.php';    
+               
+        return true;
+    }
 }

@@ -7,15 +7,13 @@ class MainController
     
     public function actionIndex()
     {
-              
-        require_once ROOT. '/../app/views/tamplateView.php';    
-               
-        return true;
-    }  
-    
-    public function actionLoginForm()
-    {
-        $contentView = 'loginView.php';      
+        $contentId = '';
+        
+        if (isset($_GET['contentId'])) {
+            $contentId = $_GET['contentId'];
+        }  
+        
+        $contentView = 'comments.php';
         require_once ROOT. '/../app/views/tamplateView.php';    
                
         return true;

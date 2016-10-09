@@ -22,9 +22,10 @@ class Validate
         if ($method !== null ) {           
             $this->error[$title][] = $this->$method($data);
         }
-
-        $this->error[$title] = array_filter($this->error[$title]);
         
+        if ($this->error != []) {
+            $this->error[$title] = array_filter($this->error[$title]);
+        }
         if (empty($this->error[$title])) {  
             unset($this->error[$title]);   
         } else {

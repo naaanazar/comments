@@ -39,9 +39,9 @@ class Router
 	{
         $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
         header('HTTP/1.1 404 Not Found');
-		header("Status: 404 Not Found");
-		//header('Location:'.$host.'404');
-                echo 'Error 404 Not Found';
+        header("Status: 404 Not Found");
+        //header('Location:'.$host.'404');
+        echo 'Error 404 Not Found';
     }
 
     public function run()
@@ -60,17 +60,22 @@ class Router
 
                 if (preg_match("~$uriPattern~", $uri)) {
 
-                    $internalRoute = preg_replace("~$uriPattern~", $path, $uri);
-                    
+                    $internalRoute = preg_replace("~$uriPattern~", $path, $uri);                    
                     $exp = explode('/', $internalRoute);
                     $controllerName = array_shift($exp) . 'Controller';
 
-                    $actionName = 'action' . ucfirst(array_shift($exp));      
-
+                    $actionName = 'action' . ucfirst(array_shift($exp));   
+                  
+                    $pos = stripos($actionName, '?');
+                    
+                    if ($pos !== false) {
+                        $actionName = substr($actionName, 0, $pos);
+                    }
+                    
                     $parameters = $exp;
 
                     $controllerObj = $this->createObj($controllerName);
-                    //$result = $controllerObj->$actionName();
+                    //$result = $controllerObj->$actionName(); 
                     
                     if(method_exists($controllerObj, $actionName))
                     {
@@ -82,7 +87,11 @@ class Router
                     } else {
                         $this->ErrorPage404(); 
                     }  
-                } 
+                }  
+            }
+            
+            if (!isset($internalRoute)) {
+                $this->ErrorPage404(); 
             }
         }        
     }

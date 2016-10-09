@@ -5,7 +5,7 @@ namespace App\models;
 use App\library\Database;
 use App\library\QueryToDB;
 
-class Users {
+class AuthModel {
     
     private $conn;     
 

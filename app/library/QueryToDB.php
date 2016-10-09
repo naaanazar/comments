@@ -25,9 +25,13 @@ class QueryToDb
             return $result;
             
         } else {
-            $log_sql =  "error" . $sql . "<br>" . mysqli_error($conn);
-            header ("location:error.php");
+           echo $log_sql =  "error" . $sql . "<br>" . mysqli_error($this->conn);
+           // header ("location:error.php");
             exit;
         }        
     }
+    
+    public function getConnection() {
+            return $this->conn;
+	}
 }

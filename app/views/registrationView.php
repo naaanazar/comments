@@ -1,11 +1,11 @@
 <div class="row-fluid">
-    <div class="col-sm-4 col-sm-offset-4 col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4" >
+    <div class="col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4" >
         <div class="login-panel panel panel-default">
             <div class="panel-heading"> 
-                <h3> Sing In </h3>
+                <h3> Sing Up </h3>
             </div>
             <div class="panel-body">
-                <form action="/users/insert-registration-data" method="post" id="reg"  >
+                <form action="/auth/insert-registration-data" method="post" id="reg"  >
                     <div class="form-group">                         
                         <label for="username">Username:</label>
                         <input type="text" name="username" class="form-control" id="username" placeholder="Enter username">
@@ -25,7 +25,7 @@
                        <input type="password" name="confirmPassword" class="form-control" id="pwd" placeholder="Confirm password">
                        <?= isset($error['confirm'])? "<span class='error_f'> " . $error['confirm']. "</span>": '';?>
                     </div>            
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Sing On</button>
                 </form>
             </div>    
         </div>        

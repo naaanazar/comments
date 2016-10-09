@@ -1,11 +1,22 @@
 .panel-heading h3{
     margin:0px;
 }
-
 .error_f{
 	display: block;
 	font-size: 11px;
 	/*margin: -7px 0 -4px;*/
 
 	color: red;
+}
+ul {
+    list-style-type: none;
+    
+}
+
+.parent-0 {
+     padding-left: 0px;
+}
+
+.comments-list-container li {   
+    
 }

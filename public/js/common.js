@@ -2,7 +2,16 @@ $(document).ready(function () {
     
     commentsList();
     
-
+    $(document).on("click", '.edit-back' , function (e) {   
+       closeEditForm(e);       
+    });
+    
+    $(document).on("click", '.reply-back' , function (e) {   
+       $(e.target).closest('.ul-comment-content').find('.comments-list-footer').show();
+       $(e.target).closest('.ul-comment-content').find('#sendReplyForm').remove();
+       
+       
+    });
     
     $('#sendCommentForm').submit(function (e) {
         e.preventDefault();        
@@ -65,7 +74,7 @@ $(document).ready(function () {
                             '<a href="#" class="btn reply-back  btn-xs"><span class="glyphicon glyphicon-menu-left">' +
                                 '</span><span class="glyphicon glyphicon-menu-left"></span> Back' +
                             '</a>' +   
-                            '<textarea class="form-control" name="comment" rows="3" id="commentField"></textarea>' +
+                            '<textarea class="form-control comment-field" name="comment" rows="3" id="commentField"></textarea>' +
                             '<input type="hidden" name="userId" value="' + id + '">' +
                             '<input type="hidden" name="contentId" value="' + contentId + '">' +
                             '<input type="hidden" name="parentId" value="' + parentId + '">' +
@@ -108,7 +117,7 @@ $(document).ready(function () {
                             '<a href="#" class="btn edit-back  btn-xs"><span class="glyphicon glyphicon-menu-left">' +
                                 '</span><span class="glyphicon glyphicon-menu-left"></span> Back' +
                             '</a>' +                            
-                            '<textarea class="form-control editComentsValue" name="comment" rows="3" id="commentField"></textarea>' +
+                            '<textarea class="form-control comment-field editComentsValue" name="comment" rows="3" id="commentField"></textarea>' +
                             '<input type="hidden" name="id" value="' + commentId + '">' +                           
                             '<button type="submit" class="btn btn-success btn-xs" id="editCommentButton" >Edit comment</button>' +
                         '</div>' +

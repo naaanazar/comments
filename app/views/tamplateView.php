@@ -12,21 +12,26 @@
         
     </head>
     <body>
-        <div class="container">
-          
-            <?= isset($_SESSION['username']) ? $_SESSION['username'] : '' ?>
-            
-            <?php if (isset($_SESSION['username'])) :?>
+        <div class="nav">
+            <div class="container">
                 
-                <a href="/auth/sing-out" class="btn btn-default btn-xs" role="button">Sing Out</a>
+                <div class="title-comments">
+                    Comments:
+                </div>
+                <div class="username">
+                    <?= isset($_SESSION['username']) ? $_SESSION['username'] : '' ?>
+                </div>
                 
-            <?php else: ?>
-                <a href="/auth/login-form" class="btn btn-default btn-xs" role="button">Sing In</a>
-                <a href="/auth/sing-on" class="btn btn-success btn-xs" role="button">Sing Up</a>               
-            <?php endif; ?>
-           
+                <?php if (isset($_SESSION['username'])) :?>
+                    <a href="/auth/sing-out<?= isset($contentId) ? '?contentId=' .$contentId : '' ?>" class="btn btn-default btn-xs" role="button">Sing Out</a>
+                <?php else: ?>
+                    <a href="/auth/login-form<?= isset($contentId) ? '?contentId=' .$contentId : '' ?>" class="btn btn-default btn-xs" role="button">Sing In</a>
+                    <a href="/auth/sing-on<?= isset($contentId) ? '?contentId=' .$contentId : '' ?>" class="btn btn-success btn-xs" role="button">Sing Up</a>               
+                <?php endif; ?>
+
+            </div>
         </div>
-        <div class="container">  
+        <div class="container" >  
         
         <?php isset($contentView) ? require_once ROOT. '/../app/views/' . $contentView : ''; ?>
             

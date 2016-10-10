@@ -9,13 +9,14 @@
                     <?= isset($error['errorLogin'])? "<span class='error_f'> " . $error['errorLogin']. "</span>": '';?>
                     <div class="form-group">                         
                         <label for="username">Username:</label>
-                        <input type="text" name="username" class="form-control" id="username" placeholder="Enter username">
+                        <input type="text" name="username" class="form-control" id="username" required placeholder="Enter username">
                         <?= isset($error['username'])? "<span class='error_f'> " . $error['username']. "</span>": '';?>
                     </div>            
                     <div class="form-group">
                        <label for="pwd">Password:</label>
-                       <input type="password" name="password" class="form-control" id="pwd" placeholder="Enter password">
+                       <input type="password" name="password" class="form-control" required id="pwd" placeholder="Enter password">
                        <?= isset($error['password'])? "<span class='error_f'> " . $error['password']. "</span>": '';?>
+                       <input type="hidden"  name="contentId" value="<?= isset($contentId) ? $contentId : '' ?>">
                     </div>                 
                     <button type="submit" class="btn btn-primary btn-xs">Sing In</button>                  
                 </form>

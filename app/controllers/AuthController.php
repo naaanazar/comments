@@ -8,6 +8,9 @@ class AuthController {
     public function actionSingIn()
     {
         if (isset($_POST["username"]) && isset($_POST["password"])) {
+            if (isset($_POST['contentId'])) {
+                $contentId = $_POST['contentId'];
+            } 
                           
             $validation = new Validate;   
 
@@ -32,7 +35,11 @@ class AuthController {
 
                         ini_set('session.gc_maxlifetime', 60 * 60 * 24);			 		
                         $_SESSION['check'] = hash('ripemd128',$_SERVER['REMOTE_ADDR'] .  $_SERVER['HTTP_USER_AGENT']);
-                        header("location:/");
+                        if (isset($contentId)) {
+                            header ("location:/?contentId=$contentId");
+                        } else {
+                            header ("location:/");
+                        }
                         exit;
                     }
                     else {                       
@@ -50,14 +57,19 @@ class AuthController {
         
     public function actionRegistrationForm()
     {  
+        if (isset($_GET['contentId'])) {
+            $contentId = $_GET['contentId'];
+        }         
         $contentView = 'registrationView.php';
-        require_once ROOT. '/../app/views/tamplateView.php';      
-
-        //return true;
+        require_once ROOT. '/../app/views/tamplateView.php';
+        
     }
     
     public function actionLoginForm()
     {
+        if (isset($_GET['contentId'])) {
+            $contentId = $_GET['contentId'];
+        }         
         $contentView = 'loginView.php';      
         require_once ROOT. '/../app/views/tamplateView.php';    
                
@@ -69,8 +81,12 @@ class AuthController {
 
         if (isset($_POST['confirmPassword']) &&
             isset($_POST['username']) &&
-            isset($_POST['password'])) {                 
-
+            isset($_POST['password'])) {  
+            
+            if (isset($_POST['contentId'])) {
+                $contentId = $_POST['contentId'];
+            } 
+            
             $validation = new Validate;   
 
             $registration['username'] = $validation->validation('username', $_POST['username'], 3, 15, 'username');
@@ -91,10 +107,19 @@ class AuthController {
         }        
     }
     
-    function actionSingOut(){	
+    function actionSingOut()
+    {	
+        
+        if (isset($_GET['contentId'])) {
+            $contentId = $_GET['contentId'];
+        } 
 	session_unset();
 	session_destroy();
-	header ('location:/?id=asdasasd');
+        if (isset($contentId)) {
+            header ("location:/?contentId=$contentId");
+        } else {
+            header ("location:/");
+        }
 	exit;
     }
 }

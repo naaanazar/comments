@@ -10,9 +10,16 @@ use App\components\Router;
 require ROOT . '/../vendor/autoload.php';
 session_start();
 
+//if (isset($_GET['contentId'])) {
+  //  setcookie("contentId", $_GET['contentId']);
+//}
+
 if (isset($_GET['contentId'])) {
-    setcookie("contentId", $_GET['contentId']);
-}
+    $contentId = $_GET['contentId'];
+} 
+if (isset($_POST['contentId'])) {
+    $contentId = $_POST['contentId'];
+} 
 
 $router = new Router();
 $router->run();

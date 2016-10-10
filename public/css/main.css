@@ -1,4 +1,5 @@
 body{
+    
     color:#555
 }
 textarea{
@@ -11,11 +12,11 @@ h5{
     margin-bottom: 5px;
 }
 .comment-field{
-    border:none;
-    box-shadow: inset 23px 0px 47px -25px #D9F4FF,6px 4px 16px -5px #917E7E;
+    
+    box-shadow: inset 23px 3px 47px -25px #D9F4FF,6px 4px 16px -5px #917E7E;
 }
-.comment-block{
-   
+.nav{
+    box-shadow: 7px 7px 19px -6px #917E7E;
 }
 .panel-heading h3{
     margin:0px;
@@ -39,4 +40,66 @@ ul {
 }
 .up-rating{
     color:#449d44
+}
+.menu_container{
+	width: 960px;
+	margin: 0 auto;
+}
+.navigation {
+	width:100%;
+	margin:0 auto;
+	background-color:#222;
+	border-color:#101010;
+	min-height: 30px;
+}
+.navigation li {
+	float:left;
+	width: 100px;
+}
+.navigation a {
+	display:block;
+	color:#9d9d9d;
+	line-height: 30px;
+	font-weight: bold;
+	text-align: center;
+}
+.navigation li a:hover {
+	color:white;
+	background-color: black;
+}
+.username{
+    display: inline-block;
+    font-weight: bold;
+    color: #337ab7;
+    margin-right: 10px;
+}
+.title-comments{
+    display: inline-block;
+    font-weight: bold;
+    color: #555;
+    margin-right: 10px;
+}
+.header{
+	background: url(../img/bg4.jpg) no-repeat;	
+	background-color: green;
+	width:100%;
+	margin:0 auto;
+  	height: 300px;
+  	position: relative;
+}
+.header_text
+{
+  	padding-top: 70px;
+  	letter-spacing:0.1em;
+    text-align: center;
+    font:normal normal normal 55px/1.4em 'Courier New',serif ;
+    color:#302D2D;    
+ }
+.headerblock{
+	background-color: white;
+	width:960px;
+	height: 80px;  
+ 	position: absolute;
+	bottom: 0px; 
+	left:50%; margin-left:-480px;	
 }

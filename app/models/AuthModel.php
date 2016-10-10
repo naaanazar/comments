@@ -7,8 +7,7 @@ use App\library\QueryToDB;
 
 class AuthModel {
     
-    private $conn;     
-
+    private $conn; 
    
     public static function insertUsersData($registration)
     {

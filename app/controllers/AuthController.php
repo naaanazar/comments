@@ -8,6 +8,7 @@ class AuthController {
     public function actionSingIn()
     {
         if (isset($_POST["username"]) && isset($_POST["password"])) {
+            
             if (isset($_POST['contentId'])) {
                 $contentId = $_POST['contentId'];
             } 
@@ -35,11 +36,13 @@ class AuthController {
 
                         ini_set('session.gc_maxlifetime', 60 * 60 * 24);			 		
                         $_SESSION['check'] = hash('ripemd128',$_SERVER['REMOTE_ADDR'] .  $_SERVER['HTTP_USER_AGENT']);
+                       
                         if (isset($contentId)) {
                             header ("location:/?contentId=$contentId");
                         } else {
                             header ("location:/");
                         }
+                        
                         exit;
                     }
                     else {                       
@@ -59,7 +62,8 @@ class AuthController {
     {  
         if (isset($_GET['contentId'])) {
             $contentId = $_GET['contentId'];
-        }         
+        }   
+        
         $contentView = 'registrationView.php';
         require_once ROOT. '/../app/views/tamplateView.php';
         
@@ -69,7 +73,8 @@ class AuthController {
     {
         if (isset($_GET['contentId'])) {
             $contentId = $_GET['contentId'];
-        }         
+        }    
+        
         $contentView = 'loginView.php';      
         require_once ROOT. '/../app/views/tamplateView.php';    
                
@@ -87,8 +92,7 @@ class AuthController {
                 $contentId = $_POST['contentId'];
             } 
             
-            $validation = new Validate;   
-
+            $validation = new Validate;
             $registration['username'] = $validation->validation('username', $_POST['username'], 3, 15, 'username');
             $registration['password'] = $validation->validation('password', $_POST['password'], 5, 15);
             $registration['confirmPassword'] = $validation->validation('confirm', $_POST['confirmPassword'], null, null, 'confirm'); 

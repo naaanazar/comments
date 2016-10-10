@@ -1,17 +1,6 @@
 $(document).ready(function () {    
     
-    commentsList();
-    
-    $(document).on("click", '.edit-back' , function (e) {   
-       closeEditForm(e);       
-    });
-    
-    $(document).on("click", '.reply-back' , function (e) {   
-       $(e.target).closest('.ul-comment-content').find('.comments-list-footer').show();
-       $(e.target).closest('.ul-comment-content').find('#sendReplyForm').remove();
-       
-       
-    });
+    commentsList(); 
     
     $('#sendCommentForm').submit(function (e) {
         e.preventDefault();        
@@ -21,8 +10,7 @@ $(document).ready(function () {
             url: '/comments/insert-comment',
             data: $('#sendCommentForm').serialize(),
             success: function (data) {
-                $('#commentField').val('');
-                
+                $('#commentField').val('');                
                 commentsList(); 
             }           
         });
@@ -36,8 +24,7 @@ $(document).ready(function () {
             url: '/comments/insert-comment',
             data: $('#sendReplyForm').serialize(),
             success: function (data) {
-                $('#commentField').val('');
-                
+                $('#commentField').val('');                
                 commentsList(); 
             }           
         });
@@ -94,9 +81,16 @@ $(document).ready(function () {
     
     $(document).on("click", '.reply-back' , function (e) {   
        $(e.target).closest('.ul-comment-content').find('.comments-list-footer').show();
-       $(e.target).closest('.ul-comment-content').find('#sendReplyForm').remove();
-       
-       
+       $(e.target).closest('.ul-comment-content').find('#sendReplyForm').remove(); 
+    });
+    
+    $(document).on("click", '.edit-back' , function (e) {   
+       closeEditForm(e);       
+    });
+    
+    $(document).on("click", '.reply-back' , function (e) {   
+       $(e.target).closest('.ul-comment-content').find('.comments-list-footer').show();
+       $(e.target).closest('.ul-comment-content').find('#sendReplyForm').remove(); 
     });
     
     $(document).on("click", '.edit-button' , function (e) {    
@@ -212,65 +206,66 @@ function createCommentsTree(data, userId)
     var item;
     htmlCommentsTree +='<ul class="ul-comment-content">'; 
     
-        for (item in data) {
-            if (data[item]['up'] == 0){
-                data[item]['up'] = '';            
-            }
-
-            if (data[item]['down'] == 0){
-                data[item]['down'] = '';            
-            }
-            var disabled = ''
-            if (userId == data[item]['user_id']) {
-                disabled = 'disabled';
-            }
-
-            if (typeof(data[item]) === 'object') {
-                htmlCommentsTree += '' +
-                '<li>' +
-                    '<div class="comment-block">' +
-                        '<div class="comments-list-heder">' +
-                            '<h5><a href=""><b>' + data[item]['username'] + '</b></a> . <small>' + data[item]['date'] + '</small></h5>' +
-                        '</div>' +
-                        '<div class="comments-list-body-container">' +
-                            '<div class="comments-list-body">' +
-                                data[item]['comment'] +
-                            '</div>' +
-                        '</div>' +
-                        '<div class="comments-list-footer" data-user-id="' + data[item]['user_id'] + '" data-comment-id="' + data[item]['id'] + '">'+                    
-                            '<a href="#" class="btn up-button  btn-xs " >' +
-                                '<span class="glyphicon glyphicon-thumbs-up"></span>' +
-                            '</a><small>+<span class="up-rating">' + data[item]['up']  + '</span></small>' +                    
-                            '<a href="#" class="btn down-button  btn-xs" >' +
-                                '<span class="glyphicon glyphicon-thumbs-down"></span>' +
-                            '</a><small>-<span class="down-rating">' + data[item]['down'] + '</span></small>';
-
-                            if (userId !== 'null' ){
-                                htmlCommentsTree += '' +
-                                '<a href="#" class="btn reply-button  btn-xs" data-comment-id="' + data[item]['id'] + '">' +
-                                    'Reply <span class="glyphicon glyphicon-envelope"></span>' +
-                                '</a>';
-                            }
-
-                            if (userId == data[item]['user_id'] ){
-                                htmlCommentsTree += '' +
-                                '<a href="#" class="btn  edit-button  btn-xs" data-comment-id="' + data[item]['id'] + '">' +
-                                    'Edit <span class="glyphicon glyphicon-edit"></span>' +
-                                '</a>' + 
-                                '<a href="#" class="btn delete-button  btn-xs" data-comment-id="' + data[item]['id'] + '">' +
-                                    'Delete <span class="glyphicon glyphicon-remove"></span>' +
-                                '</a>';
-                            }
-
-                            htmlCommentsTree += '' +
-                        '</div>' +
-                    '</div>' +                    
-                '</li>';              
-                createCommentsTree(data[item], userId);      
-            }
+    for (item in data) {        
+        var disabled = ''
+        
+        if (data[item]['up'] == 0){
+            data[item]['up'] = '';            
         }
-        htmlCommentsTree += '</ul>';
-    
+
+        if (data[item]['down'] == 0){
+            data[item]['down'] = '';            
+        }        
+        
+        if (userId == data[item]['user_id']) {
+            disabled = 'disabled';
+        }
+
+        if (typeof(data[item]) === 'object') {
+            htmlCommentsTree += '' +
+            '<li>' +
+                '<div class="comment-block">' +
+                    '<div class="comments-list-heder">' +
+                        '<h5><a href=""><b>' + data[item]['username'] + '</b></a> . <small>' + data[item]['date'] + '</small></h5>' +
+                    '</div>' +
+                    '<div class="comments-list-body-container">' +
+                        '<div class="comments-list-body">' +
+                            data[item]['comment'] +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="comments-list-footer" data-user-id="' + data[item]['user_id'] + '" data-comment-id="' + data[item]['id'] + '">'+                    
+                        '<a href="#" class="btn up-button  btn-xs " >' +
+                            '<span class="glyphicon glyphicon-thumbs-up"></span>' +
+                        '</a><small>+<span class="up-rating">' + data[item]['up']  + '</span></small>' +                    
+                        '<a href="#" class="btn down-button  btn-xs" >' +
+                            '<span class="glyphicon glyphicon-thumbs-down"></span>' +
+                        '</a><small>-<span class="down-rating">' + data[item]['down'] + '</span></small>';
+
+                        if (userId !== 'null' ){
+                            htmlCommentsTree += '' +
+                            '<a href="#" class="btn reply-button  btn-xs" data-comment-id="' + data[item]['id'] + '">' +
+                                'Reply <span class="glyphicon glyphicon-envelope"></span>' +
+                            '</a>';
+                        }
+
+                        if (userId == data[item]['user_id'] ){
+                            htmlCommentsTree += '' +
+                            '<a href="#" class="btn  edit-button  btn-xs" data-comment-id="' + data[item]['id'] + '">' +
+                                'Edit <span class="glyphicon glyphicon-edit"></span>' +
+                            '</a>' + 
+                            '<a href="#" class="btn delete-button  btn-xs" data-comment-id="' + data[item]['id'] + '">' +
+                                'Delete <span class="glyphicon glyphicon-remove"></span>' +
+                            '</a>';
+                        }
+
+                        htmlCommentsTree += '' +
+                    '</div>' +
+                '</div>' +                    
+            '</li>';              
+            createCommentsTree(data[item], userId);      
+        }
+    }
+    htmlCommentsTree += '</ul>';    
 }
 
 

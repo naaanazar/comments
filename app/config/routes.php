@@ -11,6 +11,5 @@ return [
     'comments/get-session' => 'comments/getSessionUsername',
     'comments/update-comment' => 'comments/updateComment',
     'comments/delete-comment' => 'comments/deleteComment',
-    'comments/set-rating' => 'comments/setRating',
-    'comments/set-down-rating' => 'comments/setDownRating',
+    'comments/set-rating' => 'comments/setRating',  
    ];

@@ -4,7 +4,7 @@
             <div class="panel-heading"> 
                 <h3> Sing In </h3>
             </div>
-            <div class="panel-body">
+            <div class="panel-body">                
                 <form action="/auth/sing-in" method="post" id="login"  >
                     <?= isset($error['errorLogin'])? "<span class='error_f'> " . $error['errorLogin']. "</span>": '';?>
                     <div class="form-group">                         
@@ -17,7 +17,10 @@
                        <input type="password" name="password" class="form-control" required id="pwd" placeholder="Enter password">
                        <?= isset($error['password'])? "<span class='error_f'> " . $error['password']. "</span>": '';?>
                        <input type="hidden"  name="contentId" value="<?= isset($contentId) ? $contentId : '' ?>">
-                    </div>                 
+                    </div>   
+                    <a href="/<?= isset($contentId) ? '?contentId=' . $contentId : '' ?>" class="btn  btn-xs"><span class="glyphicon glyphicon-menu-left">
+                        </span><span class="glyphicon glyphicon-menu-left"></span> Back
+                    </a>  
                     <button type="submit" class="btn btn-primary btn-xs">Sing In</button>                  
                 </form>
             </div>

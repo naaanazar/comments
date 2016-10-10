@@ -25,7 +25,10 @@
                        <input type="password" required  name="confirmPassword" class="form-control" id="pwd" placeholder="Confirm password">
                        <?= isset($error['confirm'])? "<span class='error_f'> " . $error['confirm']. "</span>": '';?>
                        <input type="hidden"  name="contentId" value="<?= isset($contentId) ? $contentId : '' ?>">
-                    </div>            
+                    </div>
+                    <a href="/<?= isset($contentId) ? '?contentId=' . $contentId : '' ?>" class="btn  btn-xs"><span class="glyphicon glyphicon-menu-left">
+                        </span><span class="glyphicon glyphicon-menu-left"></span> Back
+                    </a> 
                     <button type="submit" class="btn btn-primary">Sing On</button>
                 </form>
             </div>    

@@ -37,4 +37,16 @@ ul {
 .up-rating{
     color:#449d44
 }
+.username{
+    display: inline-block;
+    font-weight: bold;
+    color: #337ab7;
+    margin-right: 10px;
+}
+.title-comments{
+    display: inline-block;
+    font-weight: bold;
+    color: #555;
+    margin-right: 10px;
+}
 

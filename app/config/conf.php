@@ -2,5 +2,5 @@
 
 define('HOST', "127.0.0.1");
 define('USERNAME', "naaa");
-define('PASSWORD', "98465703");
+define('PASSWORD', "");
 define('DATABASE', "comment_db");

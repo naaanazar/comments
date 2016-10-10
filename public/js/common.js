@@ -17,19 +17,7 @@ $(document).ready(function () {
                 commentsList(); 
             }           
         });
-    });
-    
-//    /auth/sing-out
-//    $(document).on("click", '.sing-out' , function (e) {
-//        e.preventDefault();        
-//       
-//        $.get('/auth/sing-out', function () {
-//            
-//        });
-//    });
-
-
-    
+    });    
     
     $(document).on("submit", '#sendReplyForm' , function (e) {    
         e.preventDefault();        
@@ -145,25 +133,32 @@ $(document).ready(function () {
     
     $(document).on("click", '.up-button' , function (e) {
         e.preventDefault();
-        var id = $(e.target).closest('.comments-list-footer').data('comment-id');
-        console.log(id);
-        
-        $.post('/comments/set-rating', {'id': id, 'rating': 'up'}, function (data) {
-            
-        });
+       setRating(data,'up' , e)  
     });
     
     $(document).on("click", '.down-button' , function (e) {
         e.preventDefault();
-        var id = $(e.target).closest('.comments-list-footer').data('comment-id');
-        console.log(id);
-        
-        $.post('/comments/set-rating', {'id': id, 'rating': 'down'}, function (data) {
-            
-        });
+        setRating(data,'down' , e)        
     });
 });
 var htmlCommentsTree;
+
+function setRating(data, rating, e){
+    var id = $(e.target).closest('.comments-list-footer').data('comment-id');
+    var userId = $(e.target).closest('.comments-list-footer').data('user-id');
+    
+    $.post('/comments/set-rating', {'id': id, 'rating': rating, 'userId': userId}, function (data) {
+        
+        if (data != 'false'){
+            var ratingUp = +$(e.target).closest('.comments-list-footer').find('.up-rating').text();
+            var ratingDown = +$(e.target).closest('.comments-list-footer').find('.down-rating').text();
+            data = $.parseJSON(data);
+            console.log(data.up);
+            $(e.target).closest('.comments-list-footer').find('.up-rating').text(ratingUp + data['up']);
+            $(e.target).closest('.comments-list-footer').find('.down-rating').text(ratingDown + data['down']);
+        }
+    });
+}
 
 function closeEditForm(e)
 {
@@ -204,55 +199,69 @@ function checkVariable(variable) {
 };
 
 function createCommentsTree(data, userId) 
-{
-    
+{    
     var item;
-    htmlCommentsTree +='<ul class="ul-comment-content">';  
+    htmlCommentsTree +='<ul class="ul-comment-content">'; 
     
-    for (item in data) {    
-        
-        if (typeof(data[item]) === 'object') {
-            htmlCommentsTree += '' +
-            '<li>' +
-                '<div class="comments-list-heder">' +
-                    '<h5><a href=""><b>' + data[item]['username'] + '</b></a> . <small>' + data[item]['date'] + '</small><h5>' +
-                '</div>' +
-                '<div class="comments-list-body-container">' +
-                    '<div class="comments-list-body">' +
-                        data[item]['comment'] +
-                    '</div>' +
-                '</div>' +
-                '<div class="comments-list-footer"  data-comment-id="' + data[item]['id'] + '">'+
-                    
-                    '<a href="#" class="btn up-button  btn-xs" >' +
-                        '<span class="glyphicon glyphicon-thumbs-up"></span>' +
-                    '</a><small>3</small>' +                    
-                    '<a href="#" class="btn down-button  btn-xs" >' +
-                        '<span class="glyphicon glyphicon-thumbs-down"></span>' +
-                    '</a><small>3</small>';
-      
-                    if (userId !== 'null' ){
-                        htmlCommentsTree += '' +
-                        '<a href="#" class="btn reply-button  btn-xs" data-comment-id="' + data[item]['id'] + '">' +
-                            'Reply <span class="glyphicon glyphicon-envelope"></span>' +
-                        '</a>';
-                    }
-            
-                    if (userId == data[item]['user_id'] ){
-                        htmlCommentsTree += '' +
-                        '<a href="#" class="btn  edit-button  btn-xs" data-comment-id="' + data[item]['id'] + '">' +
-                            'Edit <span class="glyphicon glyphicon-edit"></span>' +
-                        '</a>' + 
-                        '<a href="#" class="btn delete-button  btn-xs" data-comment-id="' + data[item]['id'] + '">' +
-                            'Delete <span class="glyphicon glyphicon-remove"></span></a>';
-                    }
-                    htmlCommentsTree += '' +
-                '</div>' +
-            '</li>';              
-            createCommentsTree(data[item], userId);      
+        for (item in data) {
+            if (data[item]['up'] == 0){
+                data[item]['up'] = '';            
+            }
+
+            if (data[item]['down'] == 0){
+                data[item]['down'] = '';            
+            }
+            var disabled = ''
+            if (userId == data[item]['user_id']) {
+                disabled = 'disabled';
+            }
+
+            if (typeof(data[item]) === 'object') {
+                htmlCommentsTree += '' +
+                '<li>' +
+                    '<div class="comment-block">' +
+                        '<div class="comments-list-heder">' +
+                            '<h5><a href=""><b>' + data[item]['username'] + '</b></a> . <small>' + data[item]['date'] + '</small></h5>' +
+                        '</div>' +
+                        '<div class="comments-list-body-container">' +
+                            '<div class="comments-list-body">' +
+                                data[item]['comment'] +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="comments-list-footer" data-user-id="' + data[item]['user_id'] + '" data-comment-id="' + data[item]['id'] + '">'+                    
+                            '<a href="#" class="btn up-button  btn-xs " >' +
+                                '<span class="glyphicon glyphicon-thumbs-up"></span>' +
+                            '</a><small>+<span class="up-rating">' + data[item]['up']  + '</span></small>' +                    
+                            '<a href="#" class="btn down-button  btn-xs" >' +
+                                '<span class="glyphicon glyphicon-thumbs-down"></span>' +
+                            '</a><small>-<span class="down-rating">' + data[item]['down'] + '</span></small>';
+
+                            if (userId !== 'null' ){
+                                htmlCommentsTree += '' +
+                                '<a href="#" class="btn reply-button  btn-xs" data-comment-id="' + data[item]['id'] + '">' +
+                                    'Reply <span class="glyphicon glyphicon-envelope"></span>' +
+                                '</a>';
+                            }
+
+                            if (userId == data[item]['user_id'] ){
+                                htmlCommentsTree += '' +
+                                '<a href="#" class="btn  edit-button  btn-xs" data-comment-id="' + data[item]['id'] + '">' +
+                                    'Edit <span class="glyphicon glyphicon-edit"></span>' +
+                                '</a>' + 
+                                '<a href="#" class="btn delete-button  btn-xs" data-comment-id="' + data[item]['id'] + '">' +
+                                    'Delete <span class="glyphicon glyphicon-remove"></span>' +
+                                '</a>';
+                            }
+
+                            htmlCommentsTree += '' +
+                        '</div>' +
+                    '</div>' +                    
+                '</li>';              
+                createCommentsTree(data[item], userId);      
+            }
         }
-      }
-    htmlCommentsTree += '</ul>';
+        htmlCommentsTree += '</ul>';
+    
 }
 
 

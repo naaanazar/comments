@@ -63,6 +63,9 @@ class CommentsModel {
             CommentsModel::deleteSub($child["id"]);
         }
         
+        $sql = "DELETE FROM rating  WHERE comment_id = ".$commentId;
+        $query->queryToDB($sql);
+        
         $sql = "DELETE FROM comments  WHERE id = ".$commentId;
         
         return $query->queryToDB($sql);
@@ -70,49 +73,56 @@ class CommentsModel {
     
     public static function setUpRating($data) 
     {
-        $status = '';
+        
+        $status = '';  
         $up = 0;
         $down = 0;
         $query = new QueryToDB();
-        
+
         $sql = "SELECT * FROM rating WHERE user_id = " . $_SESSION['users_id'] . 
                " AND comment_id = " . $data['id'] ;
         $result = $query->queryToDB($sql);
-        
+
         if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            
-            if ($row['up'] == 0 && $data['rating'] == 'up') {
-                $up = 1;
-                $status =  '1';                
-            } elseif ($row['up'] == 1 && $data['rating'] == 'up') {
-                $status =  '0';    
-            } elseif ($row['down'] == 0 && $data['rating'] == 'down') {
-                $down = 1;  
-                $status =  '-1';
-            } elseif ($row['down'] == 1 && $data['rating'] == 'down') {
-                $status =  '0';    
-            }   
-            
-            $sql="UPDATE rating SET up='" . $up. "', down='" . $down. "' WHERE comment_id='" . 
-                $data['id'] . "' AND  user_id='" . $_SESSION['users_id']. "'";
-                
+            $row = $result->fetch_assoc();            
+
+            if ($data['rating'] == 'up') {
+
+                if ($row['up'] == 0) {
+                    $sql="UPDATE rating SET up='1', down='0' WHERE comment_id='" . 
+                         $data['id'] . "' AND  user_id='" . $_SESSION['users_id']. "'";
+                    $status =  ['up' => 1, 'down' => -1];                
+                } elseif ($row['up'] == 1) {                    
+                    $status =  ['up' => 0, 'down' => 0]; 
+                } 
+            }
+
+            if ($data['rating'] == 'down') {
+                if ($row['down'] == 0) {
+                    $sql="UPDATE rating SET up='0', down='1' WHERE comment_id='" . 
+                         $data['id'] . "' AND  user_id='" . $_SESSION['users_id']. "'";
+                    $status =  ['up' => -1, 'down' => 1];
+                } elseif ($row['down'] == 1) {                    
+                    $status =  ['up' => 0, 'down' => 0];  
+                }   
+            }
             $query->queryToDB($sql);
         } else {
-            
+
             if ($data['rating'] == 'up') {
-                $field = 'up';       
+                $field = 'up';    
+                $status =  ['up' => 1, 'down' => ''];   
             } elseif ($data['rating'] == 'down') {
-                $field = 'down';       
+                $field = 'down';  
+                $status =  ['up' => '', 'down' => 1];   
             }
-            
+
             $setSql = $sql="INSERT INTO rating (user_id, comment_id, $field)
             VALUES ('" . $_SESSION['users_id'] . "','"   . $data['id'] . "','1')"; 
-            
+
             $query->queryToDB($setSql);
-            
-            $status =  '1';            
         }
+    
         return $status;
     }
     

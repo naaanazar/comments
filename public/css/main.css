@@ -1,3 +1,22 @@
+body{
+    color:#555
+}
+textarea{
+    resize: none;  
+}
+ul {
+    list-style-type: none;    
+}
+h5{
+    margin-bottom: 5px;
+}
+.comment-field{
+    border:none;
+    box-shadow: inset 23px 0px 47px -25px #D9F4FF,6px 4px 16px -5px #917E7E;
+}
+.comment-block{
+   
+}
 .panel-heading h3{
     margin:0px;
 }
@@ -12,11 +31,12 @@ ul {
     list-style-type: none;
     
 }
-
 .parent-0 {
      padding-left: 0px;
 }
-
-.comments-list-container li {   
-    
+.down-rating{
+    color:#c9302c
+}
+.up-rating{
+    color:#449d44
 }
